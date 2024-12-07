@@ -106,6 +106,7 @@ export function DatePicker({
         </Select>
         <Calendar
           mode="range"
+          initialFocus
           disabled={disabled}
           fromDate={new Date()}
           selected={date}

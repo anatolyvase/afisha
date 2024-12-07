@@ -1,5 +1,5 @@
 import { ModeToggle } from "@/features/change-theme";
-import { Input } from "@/shared/ui/input.tsx";
+import { EventsSearch } from "@/features/search-events";
 
 export function Header() {
   return (
@@ -8,7 +8,7 @@ export function Header() {
         <div className="flex gap-4 items-center">
           <h2 className="text-xl font-bold uppercase">Городская афиша</h2>
         </div>
-        <Input className="" placeholder="Поиск" />
+        <EventsSearch />
         <div className="flex justify-end">
           <ModeToggle />
         </div>

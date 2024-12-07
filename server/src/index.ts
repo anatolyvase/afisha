@@ -28,7 +28,7 @@ app.get("/event-categories", async (req: Request, res: Response) => {
       });
       res.json(response.data);
     } catch (error) {
-      res.status(500).json({ error: "Error fetching event categories" });
+      res.status(500).json({ error });
     }
   },
 );
@@ -39,10 +39,21 @@ app.get("/events", async (req: Request, res: Response) => {
       });
       res.json(response.data);
     } catch (error) {
-      res.status(500).json({ error: "Error fetching events" });
+      res.status(500).json({ error });
     }
   },
 );
+
+app.get("/search", async (req: Request, res: Response) => {
+  try {
+    const response = await axios.get(`${KUDAGO_API_URL}/search`, {
+      params : req.query,
+    })
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+})
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

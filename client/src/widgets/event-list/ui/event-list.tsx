@@ -1,14 +1,14 @@
 import { EventCard, EventCardSkeleton, useEvents } from "@/entities/event";
+import { FilterEvents } from "@/features/filter-events";
 import { Pagination } from "@/shared/ui/pagination.tsx";
-import { Filters } from "@/widgets/event-list/ui/filters.tsx";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
 export function EventList() {
-  const now = new Date().toISOString();
+  const now = new Date();
   const { region } = useParams<{ region: string }>();
   const [currentPage, setCurrentPage] = useState(1);
-  const [filters, setFilters] = useState(`?actual_since=${now}`);
+  const [filters, setFilters] = useState(`?actual_since=${now.toISOString()}`);
   const { events, isLoading, totalPages, count } = useEvents(
     region || "msk",
     filters,
@@ -21,7 +21,12 @@ export function EventList() {
 
   return (
     <>
-      <Filters totalCount={count} isLoading={isLoading} onChange={setFilters} />
+      <FilterEvents
+        totalCount={count}
+        initialDate={now}
+        isLoading={isLoading}
+        onChange={setFilters}
+      />
       <div className="grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
         {isLoading
           ? Array.from({ length: 8 }).map((_, i) => (

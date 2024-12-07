@@ -16,11 +16,17 @@ import { DateRange } from "react-day-picker";
 
 type FiltersProps = {
   totalCount: number;
+  initialDate: Date;
   isLoading: boolean;
   onChange: (value: string) => void;
 };
 
-export function Filters({ totalCount, isLoading, onChange }: FiltersProps) {
+export function FilterEvents({
+  totalCount,
+  initialDate,
+  isLoading,
+  onChange,
+}: FiltersProps) {
   const { categories, isLoading: isCategoriesLoading } = useCategories();
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [dates, setDates] = useState<DateRange | undefined>();
@@ -31,7 +37,7 @@ export function Filters({ totalCount, isLoading, onChange }: FiltersProps) {
       const filterStr = [
         selectedCategory !== "all" && `categories=${selectedCategory}`,
         (dates && dates.from && `actual_since=${dates.from.toISOString()}`) ||
-          `actual_since=${new Date().toISOString()}`,
+          `actual_since=${initialDate.toISOString()}`,
         dates && dates.to && `actual_until=${dates.to.toISOString()}`,
         isFree && "is_free=true",
       ]
@@ -90,7 +96,7 @@ export function Filters({ totalCount, isLoading, onChange }: FiltersProps) {
         </div>
       </div>
       <div className="flex gap-2 items-center justify-center w-full text-muted-foreground min-h-9">
-        {isLoading ? "Поиск событий..." : `Найдено ${totalCount} событий`}
+        {isLoading ? "Поиск событий..." : `Найдено событий: ${totalCount}`}
         {(selectedCategory !== "all" || dates || isFree) && (
           <Button disabled={isLoading} variant="link" onClick={handleReset}>
             Очистить фильтры
