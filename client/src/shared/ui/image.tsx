@@ -20,20 +20,9 @@ export function Image({ src, alt, classNames }: ImageProps) {
     setHasError(true);
   };
 
-  if (hasError) {
-    return (
-      <div
-        className={cn(
-          "w-full bg-gray-200 dark:bg-gray-700 h-full absolute",
-          classNames?.container,
-        )}
-      />
-    );
-  }
-
   return (
     <div className={cn("relative", classNames?.container)}>
-      {isLoading && (
+      {(isLoading || hasError) && (
         <div
           className={cn(
             "w-full bg-gray-200 dark:bg-gray-700 h-full absolute",

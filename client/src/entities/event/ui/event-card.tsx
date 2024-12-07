@@ -1,3 +1,4 @@
+import { Button } from "@/shared/ui/button.tsx";
 import { Image } from "@/shared/ui/image.tsx";
 import { MapPin, RussianRuble } from "lucide-react";
 import { EventCardSchedule } from "./event-card-schedule.tsx";
@@ -49,6 +50,12 @@ export function EventCard(props: IEvent) {
             : props.price
               ? props.price
               : "уточняйте на сайте"}
+        </div>
+        <div className="flex items-center w-full justify-between mt-4">
+          <Button>Подробности</Button>
+          <span className="font-bold">
+            {props.age_restriction !== 0 && props.age_restriction}
+          </span>
         </div>
       </CardFooter>
     </Card>

@@ -4,6 +4,7 @@ export interface IEvent {
   description: string;
   price: string;
   dates: EventDate[];
+  categories: string[];
   location: {
     slug: string;
   };
