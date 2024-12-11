@@ -98,13 +98,13 @@ export function EventCardSchedule({ dates }: { dates: EventDate[] }) {
   return (
     <div className="flex items-start gap-1">
       <CalendarDays className="min-w-[18px] min-h-[18px]" size="18px" />
-      <ul className="flex flex-col font-bold text-sm">
+      <div className="flex flex-col font-bold text-sm">
         {typeof schedules === "string"
           ? schedules
           : schedules.map((schedule, index) => (
-              <li key={index}>{formatSchedule(schedule)}</li>
+              <span key={index}>{formatSchedule(schedule)}</span>
             ))}
-      </ul>
+      </div>
     </div>
   );
 }

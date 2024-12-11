@@ -1,3 +1,4 @@
+import { useIsMobile } from "@/shared/hooks/use-is-mobile.ts";
 import { Button } from "@/shared/ui/button.tsx";
 import { ChevronLeft, ChevronRight, Ellipsis } from "lucide-react";
 
@@ -12,9 +13,11 @@ export function Pagination({
   isLoading: boolean;
   onPageChange: (page: number) => void;
 }) {
+  const isMobile = useIsMobile();
+
   const generatePages = () => {
     const pages = [];
-    const neighbors = 3;
+    const neighbors = isMobile ? 0 : 3;
 
     pages.push(1);
 
@@ -72,7 +75,9 @@ export function Pagination({
             {page}
           </Button>
         ) : (
-          <span key={index} className="text-gray-500 px-2">
+          <span
+            key={index}
+            className="flex justify-center items-center text-gray-500 w-9 h-9">
             {page}
           </span>
         ),

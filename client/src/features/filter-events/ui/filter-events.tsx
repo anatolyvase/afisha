@@ -58,8 +58,8 @@ export function FilterEvents({
   };
   return (
     <div className="flex flex-col gap-2 mb-4">
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex items-center gap-2">
+      <div className="grid lg:grid-cols-2 items-start lg:justify-between gap-4">
+        <div className="grid grid-cols-2 items-center w-full gap-2">
           <div className="flex flex-col gap-2">
             <Label>Даты</Label>
             <DatePicker disabled={isLoading} date={dates} onChange={setDates} />
@@ -69,7 +69,7 @@ export function FilterEvents({
             <Select
               value={selectedCategory}
               onValueChange={setSelectedCategory}>
-              <SelectTrigger className="w-[300px]">
+              <SelectTrigger className="w-full">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -86,7 +86,7 @@ export function FilterEvents({
             </Select>
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="justify-end flex items-center gap-2">
           <Checkbox checked={isFree} onCheckedChange={setIsFree} id="is_free" />
           <label
             htmlFor="is_free"

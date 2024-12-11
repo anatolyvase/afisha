@@ -21,7 +21,7 @@ export function Image({ src, alt, classNames }: ImageProps) {
   };
 
   return (
-    <div className={cn("relative", classNames?.container)}>
+    <div className={cn("relative overflow-hidden", classNames?.container)}>
       {(isLoading || hasError) && (
         <div
           className={cn(

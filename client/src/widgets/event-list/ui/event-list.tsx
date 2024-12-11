@@ -32,7 +32,9 @@ export function EventList() {
           ? Array.from({ length: 8 }).map((_, i) => (
               <EventCardSkeleton key={i} />
             ))
-          : events.map(item => <EventCard key={item.id} {...item} />)}
+          : events.map(item => (
+              <EventCard href={`/events/${item.id}`} key={item.id} {...item} />
+            ))}
       </div>
       <Pagination
         isLoading={isLoading}

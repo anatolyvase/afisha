@@ -1,9 +1,9 @@
-import { GetEventsResponse } from "@/entities/event";
+import { SearchResponse } from "../model";
 import { api } from "@/shared/api";
 
 class SearchService {
   async search(q: string, location: string) {
-    return api.get<GetEventsResponse>("/search", {
+    return api.get<SearchResponse>("/search", {
       params: {
         q,
         ctype: "event",

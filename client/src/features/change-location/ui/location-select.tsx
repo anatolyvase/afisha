@@ -1,4 +1,4 @@
-import { useLocations } from "@/entities/location";
+import { useCurrentLocationStore, useLocations } from "@/entities/location";
 import {
   Select,
   SelectContent,
@@ -6,27 +6,25 @@ import {
   SelectTrigger,
 } from "@/shared/ui/select.tsx";
 import { Skeleton } from "@/shared/ui/skeleton.tsx";
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 
 export function LocationSelect() {
-  const { region } = useParams<{ region: string }>();
-  const [selected, setSelected] = useState<string>(region || "msk");
+  const location = useCurrentLocationStore(state => state.location);
+
   const navigate = useNavigate();
   const { locations, isLoading } = useLocations();
 
   const onValueChange = (value: string) => {
-    setSelected(value);
     navigate(`/${value}`);
   };
 
   return isLoading ? (
     <Skeleton className="flex w-[200px] h-9 rounded-lg" />
   ) : (
-    <Select value={selected} onValueChange={onValueChange}>
+    <Select value={location} onValueChange={onValueChange}>
       <SelectTrigger className="w-fit h-fit text-primary gap-1 p-0 border-none shadow-none">
-        <span className="text-3xl text-primary font-bold">
-          {locations.find(l => l.slug === selected)?.name || "Москва"}
+        <span className="text-2xl lg:text-3xl text-primary font-bold">
+          {locations.find(l => l.slug === location)?.name || "Москва"}
         </span>
       </SelectTrigger>
       <SelectContent>

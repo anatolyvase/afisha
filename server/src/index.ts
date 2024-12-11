@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import cors from "cors";
 import express, { Request, Response } from "express";
 
@@ -17,7 +17,7 @@ app.get("/locations", async (req: Request, res: Response) => {
     const response = await axios.get(`${KUDAGO_API_URL}/locations`);
     res.json(response.data);
   } catch (error) {
-    res.status(500).json({ error: "Error fetching locations" });
+    res.status(getStatus(error)).json({ error: "Error fetching locations" });
   }
 });
 
@@ -28,7 +28,7 @@ app.get("/event-categories", async (req: Request, res: Response) => {
       });
       res.json(response.data);
     } catch (error) {
-      res.status(500).json({ error });
+      res.status(getStatus(error)).json({ error });
     }
   },
 );
@@ -39,10 +39,20 @@ app.get("/events", async (req: Request, res: Response) => {
       });
       res.json(response.data);
     } catch (error) {
-      res.status(500).json({ error });
+      res.status(getStatus(error)).json({ error });
     }
   },
 );
+
+app.get("/events/:id", async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const response = await axios.get(`${KUDAGO_API_URL}/events/${id}`);
+    res.json(response.data);
+  } catch (error) {
+    res.status(getStatus(error)).json({ error });
+  }
+});
 
 app.get("/search", async (req: Request, res: Response) => {
   try {
@@ -51,10 +61,13 @@ app.get("/search", async (req: Request, res: Response) => {
     })
     res.json(response.data);
   } catch (error) {
-    res.status(500).json({ error });
+
+    res.status(getStatus(error)).json({ error });
   }
 })
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+const getStatus = (error: unknown) => (error as AxiosError).status || 500

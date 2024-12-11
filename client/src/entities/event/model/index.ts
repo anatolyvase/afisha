@@ -1,6 +1,7 @@
 export interface IEvent {
-  id: string;
+  id: number;
   title: string;
+  slug: string;
   description: string;
   price: string;
   dates: EventDate[];
@@ -27,6 +28,10 @@ export interface IEvent {
   images: EventImage[];
   is_free: boolean;
   age_restriction: number;
+}
+
+export interface DetailedEvent extends IEvent {
+  body_text: string;
 }
 
 export type EventDate = {

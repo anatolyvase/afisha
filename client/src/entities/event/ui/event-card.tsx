@@ -1,6 +1,7 @@
 import { Button } from "@/shared/ui/button.tsx";
 import { Image } from "@/shared/ui/image.tsx";
 import { MapPin, RussianRuble } from "lucide-react";
+import { NavLink } from "react-router";
 import { EventCardSchedule } from "./event-card-schedule.tsx";
 import { IEvent } from "../model";
 import {
@@ -11,7 +12,7 @@ import {
   CardTitle,
 } from "@/shared/ui/card";
 
-export function EventCard(props: IEvent) {
+export function EventCard(props: IEvent & { href: string }) {
   const truncateDescription = (description: string) => {
     if (description.length > 120) {
       return description.substring(0, 120) + "...";
@@ -24,13 +25,19 @@ export function EventCard(props: IEvent) {
 
   return (
     <Card className="flex flex-col min-h-[350px] h-fit gap-4 overflow-hidden">
-      <Image
-        classNames={{ container: "h-[350px]" }}
-        src={props.images[0].image}
-        alt={props.title}
-      />
+      <NavLink to={props.href}>
+        <Image
+          classNames={{ container: "h-[350px]" }}
+          src={props.images[0].image}
+          alt={props.title}
+        />
+      </NavLink>
       <CardHeader className="py-0 px-4 flex-1">
-        <CardTitle>{uppercaseFirstLetter(props.title)}</CardTitle>
+        <CardTitle>
+          <NavLink className="hover:underline" to={props.href}>
+            {uppercaseFirstLetter(props.title)}
+          </NavLink>
+        </CardTitle>
         <CardDescription>
           {truncateDescription(props.description)}
         </CardDescription>
@@ -52,7 +59,9 @@ export function EventCard(props: IEvent) {
               : "уточняйте на сайте"}
         </div>
         <div className="flex items-center w-full justify-between mt-4">
-          <Button>Подробности</Button>
+          <Button asChild>
+            <NavLink to={props.href}>Подробности</NavLink>
+          </Button>
           <span className="font-bold">
             {props.age_restriction !== 0 && props.age_restriction}
           </span>
